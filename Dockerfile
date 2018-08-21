@@ -1,8 +1,14 @@
-FROM alpine:3.7
+FROM alpine:edge
 
 LABEL maintainer "Levent SAGIROGLU <LSagiroglu@gmail.com>"
 
-ARG VERSION=2.4
+ARG VERSION=2.5
+
+ENV OCS_DBHOST ""
+ENV OCS_DBNAME ""  
+ENV OCS_DBUSER ""
+ENV OCS_DBPASS ""
+EXPOSE 80
 
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories 
 RUN apk add --update --no-cache bash tar gzip wget make apache2 \ 
@@ -78,10 +84,6 @@ RUN mkdir -p /var/log/ocsinventory-server/
 # RUN rm /usr/share/ocsinventory-reports/ocsreports/install.php
 RUN rm -rf /tmp/*
 
-ENV OCS_DBHOST ""
-ENV OCS_DBNAME ""  
-ENV OCS_DBUSER ""
-ENV OCS_DBPASS ""
-EXPOSE 80
+
 
 CMD ["httpd", "-D", "FOREGROUND"]
